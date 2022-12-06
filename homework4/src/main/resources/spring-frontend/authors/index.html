@@ -19,24 +19,31 @@
     </script>
 </head>
 <body class="Site">
+<header class="Header" th:replace="~{fragments/common_header_fragment :: head(genres='menu-item menu-item_ACTIVE', status='unauthorized')}">
+</header>
 <div class="Middle">
     <div class="wrap">
         <main class="Middle-main">
-            <h1 class="Middle-title">Авторы</h1>
+            <h1 class="Middle-title">Авторы
+            </h1>
             <div class="Section">
                 <div class="Authors">
-                    <div class="Authors-links" th:each="book : ${authorsMap}"><p class="Authors-link" >А</p></div>
-                    a
-                    s
-                    d
-                    fddddddddddddddddd
-                    gg
-                    g
-                    t
-                    <div class="Authors-block" th:each="el : ${authorsMap}">
-                        <h2 class="Authors-title" th:text="${el.getKey()}">А</h2>
+                    <div class="Authors-links">
+                        <a class="Authors-link"
+                           th:each="letter : ${authorData}"
+                           th:href="'#' + ${#strings.toLowerCase(letter.key)}"
+                           th:text="${letter.key}">А</a>
+                    </div>
+                    <div class="Authors-block" th:each="letter : ${authorData}">
+                        <h2 class="Authors-title"
+                            th:id="${#strings.toLowerCase(letter.key)}"
+                            th:text="${letter.key}">А
+                        </h2>
                         <div class="Authors-letter">
-                            <div class="Authors-item"><a th:text="${el.getValue()}">Абгарян Наринэ</a></div>
+                            <div class="Authors-item" th:each="author : ${letter.value}"><a
+                                    th:href="${author.last_name + ' ' + author.first_name}"
+                                    th:text="${author.last_name + ' ' + author.first_name}">Абгарян Наринэ</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -44,5 +51,6 @@
         </main>
     </div>
 </div>
+<footer class="Footer" th:replace="~{fragments/common_footer_fragment :: footer}"></footer>
 </body>
 </html>
